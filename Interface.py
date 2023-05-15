@@ -2,6 +2,7 @@ import tkinter
 from tkinter import *
 from tkinter import ttk
 from GetData import GetData
+import threading 
 class Interface():
     def execute(self):
         window = Tk()
@@ -11,7 +12,7 @@ class Interface():
         self.text_distancia = Label(window, text="0")
         self.text_distancia.pack()
 
-        button_buscar = ttk.Button(window,text="Buscar",command=lambda: self.get("São paulo, SP", "Rua alegrete, 118, jardim gonçalves"))
+        button_buscar = ttk.Button(window,text="Buscar",command=lambda: threading.Thread(target=self.get).start())
         button_buscar.pack()
 
         button_visualizar = ttk.Button(window, text="Visualizar")
@@ -19,6 +20,8 @@ class Interface():
         mainloop()
 
     def get(self, fromCity, toCity):
+        fromCit =  "São paulo, SP"
+        toCity = "Rua alegrete, 118, jardim gonçalves"
         distancia = GetData().get(fromCity, toCity)
         self.text_distancia.config(text=distancia)
 
